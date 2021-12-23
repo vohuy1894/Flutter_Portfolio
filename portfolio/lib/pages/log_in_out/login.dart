@@ -54,6 +54,7 @@ class _SignIn extends State<SignIn> {
                   },
                 ),
                 TextFormField(
+                  obscureText: true,
                   controller: passwordController,
                   cursorColor: primaryColor,
                   decoration: InputDecoration(

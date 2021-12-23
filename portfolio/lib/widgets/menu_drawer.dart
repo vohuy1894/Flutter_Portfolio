@@ -18,7 +18,7 @@ class MenuDrawer extends StatelessWidget {
         'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg';
     return Drawer(
       child: Material(
-        color: Colors.green,
+        color: Colors.white,
         child: ListView(
           children: <Widget>[
             //Contain list of menu items
@@ -62,7 +62,7 @@ class MenuDrawer extends StatelessWidget {
               height: 24,
             ),
             Divider(
-              color: Colors.white70,
+              color: Colors.black,
             ),
             const SizedBox(
               height: 16,
@@ -98,20 +98,20 @@ Widget buildHeader({
             children: [
               Text(
                 name,
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               const SizedBox(height: 4),
               Text(
                 email,
-                style: TextStyle(fontSize: 14, color: Colors.white),
+                style: TextStyle(fontSize: 14, color: Colors.black),
               ),
             ],
           ),
           Spacer(),
           CircleAvatar(
             radius: 30,
-            backgroundColor: Colors.white,
-            child: Icon(Icons.add_comment_outlined, color: Colors.green),
+            backgroundColor: Colors.black,
+            child: Icon(Icons.add_comment_outlined, color: Colors.white),
           )
         ],
       ),
@@ -121,8 +121,8 @@ Widget buildMenuItem({
   required IconData icon,
   VoidCallback? onClicked,
 }) {
-  final color = Colors.white;
-  final hoverColor = Colors.white70;
+  final color = Colors.black;
+  final hoverColor = Colors.red;
   return ListTile(
     leading: Icon(
       icon,
