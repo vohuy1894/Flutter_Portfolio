@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:portfolio/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/pages/map.dart';
-import 'package:portfolio/pages/log_in_out/register.dart';
+import 'package:portfolio/pages/log_in_out/verify.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) => context.read<AuthenticationService>().authStateChanges,
-          initialData: "lol",
+          initialData: "Portfolio",
         ),
       ],child: MaterialApp(
         title: 'Flutter Demo',
@@ -39,8 +39,9 @@ class AuthWrapper extends StatelessWidget{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    if(_auth.currentUser != null){
-      return MapPage();
+    if(_auth.currentUser!.emailVerified == false){
+      _auth.currentUser!.sendEmailVerification();
+      return VerifyPage();
     }
     return SignIn();
   }

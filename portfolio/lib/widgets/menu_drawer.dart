@@ -5,14 +5,16 @@ import '/pages/account.dart';
 //import '/pages/group.dart';
 import '/pages/user.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class MenuDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
-
+  User? _currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-    final name = 'Huy Vo';
-    final email = 'huyvo@my.unt.edu';
+    final name = _currentUser!.displayName.toString();
+    final email = _currentUser!.email.toString();
     final group = 'Sport';
     final urlImage =
         'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg';
@@ -108,11 +110,11 @@ Widget buildHeader({
             ],
           ),
           Spacer(),
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.black,
-            child: Icon(Icons.add_comment_outlined, color: Colors.white),
-          )
+          // CircleAvatar(
+          //   radius: 30,
+          //   backgroundColor: Colors.black,
+          //   child: Icon(Icons.add_comment_outlined, color: Colors.white),
+          // )
         ],
       ),
     );

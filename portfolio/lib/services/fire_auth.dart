@@ -15,28 +15,21 @@ class FireAuth {
         email: email,
         password: password,
       );
-
-      user = userCredential.user;
-      await user!.updateDisplayName(name);
-      await user.reload();
-      user = auth.currentUser;
+      
+       user = userCredential.user;
+       await user!.updateDisplayName(name);
+       await user.reload();
+       user = auth.currentUser;
+       user!.sendEmailVerification();
 
       return "Signed up";
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-
-    return auth.currentUser!.uid;
+      return e.message.toString();
+    } 
   }
 
   // For signing in an user (have already registered)
-  static Future<User?> signInUsingEmailPassword({
+  static Future<String> signInUsingEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -49,15 +42,15 @@ class FireAuth {
         password: password,
       );
       user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+      if (user!.emailVerified == false )
+      {
+        return "Not verified";
       }
+      return "Signed In";
+    } on FirebaseAuthException catch (e) {
+      return e.message.toString();
     }
 
-    return user;
   }
 
   static Future<User?> refreshUser(User user) async {

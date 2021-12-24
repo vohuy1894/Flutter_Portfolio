@@ -9,12 +9,16 @@ import 'package:portfolio/pages/content/content.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:provider/provider.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  _SignUp createState() => _SignUp();
+}
+class _SignUp extends State<SignUp> {
   final _nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _registerkey = GlobalKey<FormState>();
-  final String _loginError =  '';
+  String _loginError =  '';
   final _isProcessing = false;
 
   Widget build(BuildContext context) {
@@ -39,7 +43,7 @@ class SignUp extends StatelessWidget {
                     validator: (value) {
                       if(value == null || value.isEmpty)
                       {
-                        return "Please enter your name is here";
+                        return "Please enter your name here";
                       }
                       return null;
           
@@ -73,6 +77,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  obscureText: true,
                   controller: passwordController,
                   cursorColor: primaryColor,
                   decoration: InputDecoration(
@@ -86,8 +91,8 @@ class SignUp extends StatelessWidget {
                 ),
                 SizedBox(height: defaultPadding * 1.5),
                 SelectableText(
-                      _loginError,
-                      style: TextStyle(color: Colors.red),
+                    _loginError,
+                    style: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: defaultPadding * 1.5),
                 PrimaryButton(
@@ -96,11 +101,17 @@ class SignUp extends StatelessWidget {
                   press: () async {
                     if(_registerkey.currentState!.validate())
                     {
-                      String user = await FireAuth.registerUsingEmailPassword(name: _nameController.text, email: emailController.text, password: passwordController.text);
-
-                      if (user != null)
+                      String message = await FireAuth.registerUsingEmailPassword(name: _nameController.text, email: emailController.text, password: passwordController.text);
+                      print(message);
+                      if (message == "Signed up")
                       {
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ProfilePage(user: user)), ModalRoute.withName('/'));
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => VerifyPage()), ModalRoute.withName('/'));
+                      }else 
+                      {
+                        setState(() {
+                          _loginError = message;
+                        });
+                        
                       }
                     }
                   //       context.read<AuthenticationService>().signUp(
