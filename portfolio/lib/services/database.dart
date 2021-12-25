@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/pages/map.dart';
+import 'package:portfolio/pages/home.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 
 class AuthenticationService {
@@ -10,6 +10,7 @@ class AuthenticationService {
   AuthenticationService(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
+
   Future logOut(BuildContext context) async {
     //FirebaseAuth _auth = FirebaseAuth.instance;
     try {

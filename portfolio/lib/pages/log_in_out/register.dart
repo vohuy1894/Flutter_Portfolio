@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
-import 'package:portfolio/pages/map.dart';
+import 'package:portfolio/pages/home.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/widgets/primary_button.dart';
 import 'package:portfolio/pages/content/content.dart';
@@ -23,9 +23,10 @@ class _SignUp extends State<SignUp> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding + 50),
+          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: Form(
             key: _registerkey,
             child: Column(

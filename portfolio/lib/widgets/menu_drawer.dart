@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/pages/log_in_out/login.dart';
 //import 'package:portfolio/pages/contact/contact.dart';
 import 'package:portfolio/services/database.dart';
 import '/pages/account.dart';
@@ -6,7 +7,7 @@ import '/pages/account.dart';
 import '/pages/user.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:portfolio/global/global_color_const.dart';
 
 class MenuDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -36,28 +37,26 @@ class MenuDrawer extends StatelessWidget {
                 ),
               )),
             ),
-            const SizedBox(
-              height: 16,
-            ), //contact menu
+            const SizedBox(height: 10), //contact menu
             buildMenuItem(
               text: 'Contact',
               icon: Icons.contact_phone,
               onClicked: () => selectedItem(context, 0),
             ),
             const SizedBox(
-              height: 16,
+              height: 0,
             ), //Favourites menu
             buildMenuItem(
-              text: 'Group',
-              icon: Icons.group,
+              text: 'History',
+              icon: Icons.history,
               onClicked: () => selectedItem(context, 1),
             ),
             const SizedBox(
-              height: 16,
+              height: 10,
             ), //Account menu
             buildMenuItem(
-              text: 'Account',
-              icon: Icons.account_box,
+              text: 'Wish Lists',
+              icon: Icons.favorite,
               onClicked: () => selectedItem(context, 2),
             ),
             const SizedBox(
@@ -68,11 +67,23 @@ class MenuDrawer extends StatelessWidget {
             ),
             const SizedBox(
               height: 16,
-            ), //Update app menu
-            buildMenuItem(
-              text: 'Logout',
-              icon: Icons.logout,
-              onClicked: () => selectedItem(context, 3),
+            ),
+            //Update app menu
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
+              title: Text("Log out", style: TextStyle(color: Colors.black)),
+              hoverColor: Colors.red,
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SignIn(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -157,8 +168,6 @@ void selectedItem(BuildContext context, int index) {
         builder: (context) => AccountPage(),
       ));
       break;
-    case 3:
-      context.read<AuthenticationService>().logOut(context);
-      break;
+    
   }
 }

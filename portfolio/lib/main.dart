@@ -4,8 +4,9 @@ import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:portfolio/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:portfolio/pages/map.dart';
+import 'package:portfolio/pages/home.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,21 +32,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: AuthWrapper(),
+        initialRoute: '/',
+        routes: <String,WidgetBuilder>{
+          '/': (context) => AnimatedSplashScreen(splash: Image.asset('assets/images/logo.png',), nextScreen: SignIn(), duration: 3000, splashIconSize: double.infinity,splashTransition: SplashTransition.fadeTransition,),
+        },
     ),);
   }
 }
-class AuthWrapper extends StatelessWidget{
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  @override
-  Widget build(BuildContext context) {
-    if(_auth.currentUser!.emailVerified == false){
-      _auth.currentUser!.sendEmailVerification();
-      return VerifyPage();
-    }
-    return SignIn();
-  }
-}
+
 // ß
 // class MainPage extends StatefulWidget {
 //   @override
