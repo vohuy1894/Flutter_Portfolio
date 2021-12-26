@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 //import 'package:portfolio/pages/contact/contact.dart';
-import 'package:portfolio/services/database.dart';
 import '/pages/account.dart';
 //import '/pages/group.dart';
 import '/pages/user.dart';
@@ -63,7 +62,7 @@ class MenuDrawer extends StatelessWidget {
               height: 24,
             ),
             Divider(
-              color: Colors.black,
+              color: primaryColor,
             ),
             const SizedBox(
               height: 16,
@@ -72,9 +71,9 @@ class MenuDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(
                 Icons.logout,
-                color: Colors.black,
+                color: primaryColor,
               ),
-              title: Text("Log out", style: TextStyle(color: Colors.black)),
+              title: Text("Log out", style: TextStyle(color: primaryColor)),
               hoverColor: Colors.red,
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
@@ -111,12 +110,12 @@ Widget buildHeader({
             children: [
               Text(
                 name,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 20, color: primaryColor),
               ),
               const SizedBox(height: 4),
               Text(
                 email,
-                style: TextStyle(fontSize: 14, color: Colors.black),
+                style: TextStyle(fontSize: 14, color: primaryColor),
               ),
             ],
           ),
@@ -134,7 +133,7 @@ Widget buildMenuItem({
   required IconData icon,
   VoidCallback? onClicked,
 }) {
-  final color = Colors.black;
+  final color = primaryColor;
   final hoverColor = Colors.red;
   return ListTile(
     leading: Icon(

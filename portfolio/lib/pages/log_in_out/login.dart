@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
-import 'package:portfolio/pages/home.dart';
+import 'package:portfolio/pages/home/home.dart';
 import 'package:portfolio/services/database.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/widgets/primary_button.dart';

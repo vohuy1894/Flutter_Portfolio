@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
-import 'package:portfolio/pages/home.dart';
+import 'package:portfolio/pages/home/home.dart';
 
 class VerifyPage extends StatefulWidget {
   // final String user;
