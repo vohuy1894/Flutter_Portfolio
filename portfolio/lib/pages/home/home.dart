@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '/widgets/menu_drawer.dart';
 import 'package:portfolio/global/global_color_const.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Image.asset("assets/images/menu_icon.png"),
+              icon: SvgPicture.asset("assets/icons/menu_icon.svg", color: primaryColor,),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },

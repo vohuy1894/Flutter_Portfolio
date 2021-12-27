@@ -50,7 +50,5 @@ class AuthenticationService {
       return e.message.toString();
     }
   }
-
-  
 }
 

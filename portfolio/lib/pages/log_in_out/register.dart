@@ -143,48 +143,7 @@ class _SignUp extends State<SignUp> {
                     )
                   ],
                 ),
-                SizedBox(height: defaultPadding ),
-                Text('or'),
-                SizedBox(height: defaultPadding ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: primaryColor,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.facebook,
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: primaryColor,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset("assets/images/google-icon.png", width: 24, height: 24,)
-                      ),
-                    ),
-                    
-                  ],
-                ),
+                
                 Spacer(flex: 2),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/home/home.dart';
 import 'package:portfolio/services/database.dart';
@@ -10,6 +11,9 @@ import 'package:portfolio/pages/log_in_out/register.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:portfolio/services/google_sign.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -24,7 +28,6 @@ class _SignIn extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
@@ -36,8 +39,7 @@ class _SignIn extends State<SignIn> {
           builder: (context) => VerifyPage(),
         ),
       );
-    }else if(user != null)
-    {
+    } else if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(),
@@ -102,7 +104,15 @@ class _SignIn extends State<SignIn> {
                           //border: InputBorder.none,
                         ),
                       ),
-                      SizedBox(height: defaultPadding * 1.5),
+                      // SignInButton(Buttons.Google, onPressed: () async {
+                      //   try {
+                      //     GoogleSignIn _googleSignIn = GoogleSignIn();
+                      //     await _googleSignIn.signIn();
+                      //   } catch (error) {
+                      //     print(error);
+                      //   }
+                      // }),
+
                       SelectableText(
                         _loginError,
                         style: TextStyle(color: Colors.red),
@@ -160,6 +170,67 @@ class _SignIn extends State<SignIn> {
                             //   }
                             // });
                           }),
+                      SizedBox(height: defaultPadding * 1.5),
+                      Text(
+                        'or',
+                        style: TextStyle(color: primaryColor),
+                      ),
+                      SizedBox(height: defaultPadding),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: primaryColor,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.facebook,
+                                color: primaryColor,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              User? user = await FireAuth.signInWithGoogle(
+                                  context: context);
+
+                              if (user != null) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(
+                                      //ruser: user,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: primaryColor,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/images/google-icon.svg",
+                                  width: 24,
+                                  height: 24,
+                                  color: primaryColor,
+                                )),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: defaultPadding * 1.5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
