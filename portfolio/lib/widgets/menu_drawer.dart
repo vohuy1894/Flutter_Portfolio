@@ -7,6 +7,8 @@ import '/pages/user.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class MenuDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -14,7 +16,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = _currentUser!.displayName.toString();
-    final email = _currentUser!.email.toString();
+    final email = _currentUser!.providerData[0].email.toString();
     final group = 'Sport';
     final urlImage =
         'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg';
@@ -76,7 +78,12 @@ class MenuDrawer extends StatelessWidget {
               title: Text("Log out", style: TextStyle(color: primaryColor)),
               hoverColor: Colors.red,
               onTap: () async {
+                final GoogleSignIn googleSignIn = GoogleSignIn();
+                final FacebookAuth result = FacebookAuth.instance;
+                //await FacebookAuth.instance.logOut();
                 await FirebaseAuth.instance.signOut();
+                await googleSignIn.signOut();
+                await result.logOut();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => SignIn(),

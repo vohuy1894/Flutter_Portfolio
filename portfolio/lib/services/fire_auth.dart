@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:http/http.dart' as http;
 
 class FireAuth {
   // For registering a new user
@@ -85,14 +87,11 @@ class FireAuth {
 
         user = userCredential.user;
       } on FirebaseAuthException catch (e) {
-        
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text( e.message.toString())),
-          );
-        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message.toString())),
+        );
       }
     }
-
     return user;
   }
 
@@ -108,6 +107,35 @@ class FireAuth {
           content: Text("Error signing out, try again"),
         ),
       );
+    }
+  }
+
+  static Future<User?> signInWithFacebook() async {
+    Map<String, dynamic>? _userData;
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      final LoginResult result = await FacebookAuth.instance.login(permissions: ["email", "public_profile"]);
+      switch (result.status) {
+        case LoginStatus.success:
+          final AuthCredential facebookCredential =
+              FacebookAuthProvider.credential(result.accessToken!.token);
+          final userCredential =
+              await _auth.signInWithCredential(facebookCredential);
+          final userData = await FacebookAuth.instance.getUserData();
+          user = userCredential.user;
+          final email =  userCredential.user!.providerData[0].email;
+          _userData = userData;
+          return user;
+        case LoginStatus.cancelled:
+          return user;
+        case LoginStatus.failed:
+          return user;
+        default:
+          return null;
+      }
+    } on FirebaseAuthException catch (e) {
+      throw e;
     }
   }
 }

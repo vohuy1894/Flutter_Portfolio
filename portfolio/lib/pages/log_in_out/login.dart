@@ -3,17 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/home/home.dart';
-import 'package:portfolio/services/database.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/widgets/primary_button.dart';
-import 'package:portfolio/pages/content/content.dart';
 import 'package:portfolio/pages/log_in_out/register.dart';
-import 'package:provider/provider.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:portfolio/services/google_sign.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -32,8 +26,18 @@ class _SignIn extends State<SignIn> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null && user.emailVerified == false) {
+    print(user!.providerData[0].providerId.toString());
+    print(user.providerData[0].providerId.toString() == "facebook.com");
+    print(user != null && (user.providerData[0].providerId == "facebook.com" || user.providerData[0].providerId == "google.com") );
+    if(user != null && (user.providerData[0].providerId == "facebook.com" || user.providerData[0].providerId == "google.com") )
+    {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    }
+    else if (user != null && user.emailVerified == false) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => VerifyPage(),
@@ -180,7 +184,18 @@ class _SignIn extends State<SignIn> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () async {
+                              User? user = await FireAuth.signInWithFacebook();
+                              if (user != null) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(
+                                      //ruser: user,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 10),
                               padding: EdgeInsets.all(16),

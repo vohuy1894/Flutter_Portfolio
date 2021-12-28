@@ -44,7 +44,7 @@ class _VerifyPageState extends State<VerifyPage> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'We sent email verification to your email: ${_currentUser!.email}',
+                'We sent email verification to your email: ${_currentUser!.providerData[0].email}',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 16.0),
