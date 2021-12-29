@@ -26,9 +26,6 @@ class _SignIn extends State<SignIn> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
-    print(user!.providerData[0].providerId.toString());
-    print(user.providerData[0].providerId.toString() == "facebook.com");
-    print(user != null && (user.providerData[0].providerId == "facebook.com" || user.providerData[0].providerId == "google.com") );
     if(user != null && (user.providerData[0].providerId == "facebook.com" || user.providerData[0].providerId == "google.com") )
     {
       Navigator.of(context).pushReplacement(

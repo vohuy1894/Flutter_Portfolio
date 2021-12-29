@@ -12,9 +12,9 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: defaultPadding * 2.5),
+      margin: EdgeInsets.only(bottom: defaultPadding ),
       // It will cover 20% of our total height
-      height: size.height * 0.2,
+      height: size.height * 0.1,
       child: Stack(
         children: <Widget>[
           Container(
@@ -23,7 +23,7 @@ class HomeHeader extends StatelessWidget {
               right: defaultPadding,
               bottom: 36 + defaultPadding,
             ),
-            height: size.height * 0.2 - 27,
+            height: size.height * 0.1 - 27,
             decoration: BoxDecoration(
               color: primaryColor,
               borderRadius: BorderRadius.only(
@@ -31,18 +31,18 @@ class HomeHeader extends StatelessWidget {
                 bottomRight: Radius.circular(36),
               ),
             ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Hi Huy!',
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                //Image.asset("assets/images/logo.png")
-              ],
-            ),
-          ),
+            // child: Row(
+            //   children: <Widget>[
+            //     Text(
+            //       'Hi Huy!',
+            //       style: Theme.of(context).textTheme.headline5!.copyWith(
+            //           color: Colors.white, fontWeight: FontWeight.bold),
+            //     ),
+            //     Spacer(),
+            //     //Image.asset("assets/images/logo.png")
+            //   ],
+            // ),
+           ),
           Positioned(
             bottom: 0,
             left: 0,

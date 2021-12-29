@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '/widgets/menu_drawer.dart';
+import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
 
 import 'home_header.dart';
 import 'home_recomended.dart';
 import 'home_title_btn.dart';
 import 'home_featured.dart';
+import 'home_featured_more.dart';
+import 'package:portfolio/pages/home/home_recommended_more.dart';
+import 'package:portfolio/model/product_model.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -19,7 +23,7 @@ class HomePage extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: SvgPicture.asset("assets/icons/menu_icon.svg", color: primaryColor,),
+              icon: SvgPicture.asset("assets/icons/menu_icon.svg", color: Colors.white,),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -27,10 +31,10 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: primaryColor,
         title: Text(
-          'Portfolio',
-          style: TextStyle(color: primaryColor),
+          'Hi Huy',
+          style: TextStyle(color: Colors.white),
         ),
         elevation: 0,
       ),
@@ -39,49 +43,15 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             HomeHeader(size:size),
-            HomeTitleBtn(title: "Recommended", press: (){}),
-            HomeRecommended(),
+            HomeTitleBtn(title: "Recommended", press: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeRecommendedMore()));}),
+            HomeRecommended(products: Product.products,),
             HomeTitleBtn(title: "Featured", press: (){}),
             HomeFeatured(),
       
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: primaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              icon: Icon(
-                Icons.home,
-                color: Colors.white,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              icon: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomAppBar(),
     );
   }
 }

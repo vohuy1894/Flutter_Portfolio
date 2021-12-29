@@ -1,3 +1,5 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: <String,WidgetBuilder>{
           '/': (context) => AnimatedSplashScreen(splash: Image.asset('assets/images/logo.png',), nextScreen: SignIn(), duration: 3000, splashIconSize: double.infinity,splashTransition: SplashTransition.fadeTransition,),
-          '/home': (context) => HomePage(),
+          '/home': (context) => HomePage()
         },
     ),);
   }

@@ -7,7 +7,7 @@ class HomeTitleBtn extends StatelessWidget {
     required this.press,
   });
   final String title;
-  final Function press;
+  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class HomeTitleBtn extends StatelessWidget {
               ),
               primary: primaryColor,
             ),
-            onPressed: () {},
+            onPressed: press,
             child: Text(
               "More",
               style: TextStyle(color: Colors.white),

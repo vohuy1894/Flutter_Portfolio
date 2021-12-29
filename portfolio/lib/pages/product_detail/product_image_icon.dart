@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'product_icon.dart';
-
+import 'package:portfolio/model/product_model.dart';
 class ProductImageAndIcons extends StatelessWidget {
   const ProductImageAndIcons({
     required this.size,
+    required this.product
   });
 
   final Size size;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class ProductImageAndIcons extends StatelessWidget {
                 image: DecorationImage(
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/images/drink1.jpg"),
+                  image: AssetImage(product.imageUrl),
                 ),
               ),
             ),

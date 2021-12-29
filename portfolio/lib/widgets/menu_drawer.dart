@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:portfolio/pages/wishlist/wishlist.dart';
 
 class MenuDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -19,7 +20,7 @@ class MenuDrawer extends StatelessWidget {
     final email = _currentUser!.providerData[0].email.toString();
     final group = 'Sport';
     final urlImage =
-        'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg';
+        _currentUser!.photoURL.toString();
     return Drawer(
       child: Material(
         color: Colors.white,
@@ -171,7 +172,7 @@ void selectedItem(BuildContext context, int index) {
       break;
     case 2:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => AccountPage(),
+        builder: (context) => WishListPage(),
       ));
       break;
     

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
-
+import 'package:portfolio/model/product_model.dart';
 class ProductTitleAndPrice extends StatelessWidget {
   const ProductTitleAndPrice({
-    required this.title,
-    required this.mainIngredient,
-    required this.price,
+    required this.product
   });
 
-  final String title, mainIngredient;
-  final int price;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +18,14 @@ class ProductTitleAndPrice extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "$title\n",
+                  text: "${product.name}\n",
                   style: Theme.of(context)
                       .textTheme
                       .headline4!
                       .copyWith(color: primaryColor, fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
-                  text: mainIngredient,
+                  text: product.category,
                   style: TextStyle(
                     fontSize: 20,
                     color: primaryColor,
@@ -40,7 +37,7 @@ class ProductTitleAndPrice extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            "\$$price",
+            "\$${product.price}",
             style: Theme.of(context)
                 .textTheme
                 .headline5!

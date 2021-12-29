@@ -5,18 +5,15 @@ import 'package:portfolio/global/global_color_const.dart';
 
 import 'product_image_icon.dart';
 import 'product_title_price.dart';
+import 'package:portfolio/model/product_model.dart';
 
 class ProductDetail extends StatelessWidget {
 
   const ProductDetail({
-    required this.title,
-    required this.mainIngredient,
-    required this.price,
+    required this.product
   });
 
-  final String title ;
-  final String mainIngredient;
-  final int price;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +23,9 @@ class ProductDetail extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ProductImageAndIcons(size: size),
+              ProductImageAndIcons(size: size, product: product,),
               ProductTitleAndPrice(
-                  title: title, mainIngredient: mainIngredient, price: price),
+                  product: product,),
               SizedBox(height: defaultPadding),
               
               Row(
