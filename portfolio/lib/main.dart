@@ -7,8 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:portfolio/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/pages/home/home.dart';
-import 'package:portfolio/pages/log_in_out/verify.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:portfolio/providers/product_provider.dart';
+import 'package:portfolio/providers/user_provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<ProductProvider>(
+          create: (context) => ProductProvider(),
+        ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (context) => UserProvider(),
+        ),
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),

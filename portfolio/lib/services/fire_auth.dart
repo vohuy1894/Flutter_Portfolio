@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio/providers/user_provider.dart';
 
 class FireAuth {
   // For registering a new user
@@ -13,6 +14,7 @@ class FireAuth {
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
+
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -24,6 +26,14 @@ class FireAuth {
       await user.reload();
       user = auth.currentUser;
       user!.sendEmailVerification();
+      if (user != null) {
+        UserProvider.addUserData(
+          currentUser: user,
+          userEmail: user.providerData[0].email.toString(),
+          userImage: user.providerData[0].photoURL.toString(),
+          userName: user.displayName.toString(),
+        );
+      }
 
       return "Signed up";
     } on FirebaseAuthException catch (e) {
@@ -66,7 +76,7 @@ class FireAuth {
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-
+    UserProvider? userProvider;
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -86,6 +96,14 @@ class FireAuth {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        if (user != null) {
+          UserProvider.addUserData(
+            currentUser: user,
+            userEmail: user.providerData[0].email.toString(),
+            userImage: user.providerData[0].photoURL.toString(),
+            userName: user.displayName.toString(),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.message.toString())),
@@ -115,7 +133,8 @@ class FireAuth {
     FirebaseAuth _auth = FirebaseAuth.instance;
     User? user;
     try {
-      final LoginResult result = await FacebookAuth.instance.login(permissions: ["email", "public_profile"]);
+      final LoginResult result = await FacebookAuth.instance
+          .login(permissions: ["email", "public_profile"]);
       switch (result.status) {
         case LoginStatus.success:
           final AuthCredential facebookCredential =
@@ -124,8 +143,16 @@ class FireAuth {
               await _auth.signInWithCredential(facebookCredential);
           final userData = await FacebookAuth.instance.getUserData();
           user = userCredential.user;
-          final email =  userCredential.user!.providerData[0].email;
+          final email = userCredential.user!.providerData[0].email;
           _userData = userData;
+          if (user != null) {
+            UserProvider.addUserData(
+              currentUser: user,
+              userEmail: user.providerData[0].email.toString(),
+              userImage: user.providerData[0].photoURL.toString(),
+              userName: user.displayName.toString(),
+            );
+          }
           return user;
         case LoginStatus.cancelled:
           return user;

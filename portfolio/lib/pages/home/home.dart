@@ -11,12 +11,26 @@ import 'home_featured.dart';
 import 'home_featured_more.dart';
 import 'package:portfolio/pages/home/home_recommended_more.dart';
 import 'package:portfolio/model/product_model.dart';
+import 'package:portfolio/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+class _HomePageState extends State<HomePage> {
+    @override
+  void initState(){
+    ProductProvider initproductProvider = Provider.of(context, listen: false);
+    initproductProvider.fetchProductList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    ProductProvider productProvider = Provider.of(context);
+    //print(productProvider.getAlcoholProductDataList.first);
     return Scaffold(
       drawer: MenuDrawer(),
       appBar: AppBar(
@@ -44,7 +58,7 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             HomeHeader(size:size),
             HomeTitleBtn(title: "Recommended", press: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeRecommendedMore()));}),
-            HomeRecommended(products: Product.products,),
+            HomeRecommended(products: productProvider.getAlcoholProductDataList,),
             HomeTitleBtn(title: "Featured", press: (){}),
             HomeFeatured(),
       

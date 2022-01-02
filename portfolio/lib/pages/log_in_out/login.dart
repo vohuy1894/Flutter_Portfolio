@@ -8,13 +8,15 @@ import 'package:portfolio/widgets/primary_button.dart';
 import 'package:portfolio/pages/log_in_out/register.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:provider/provider.dart';
+import 'package:portfolio/providers/user_provider.dart';
 class SignIn extends StatefulWidget {
   @override
   _SignIn createState() => _SignIn();
 }
 
 class _SignIn extends State<SignIn> {
+  late UserProvider userProvider;
   final _loginKey =
       GlobalKey<FormState>(); //validator empty field with global key
   String _loginError = ''; //send login error string to ui

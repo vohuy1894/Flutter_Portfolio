@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/product_detail/product_detail.dart';
 import 'package:portfolio/model/product_model.dart';
+
 
 class HomeRecommended extends StatelessWidget {
   const HomeRecommended({Key? key, required this.products}) : super(key: key);
@@ -18,8 +20,9 @@ class HomeRecommended extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  ProductDetail(
-                      product: products.first,),
+                  builder: (context) => ProductDetail(
+                    product: products.first,
+                  ),
                 ),
               );
             },
@@ -30,8 +33,8 @@ class HomeRecommended extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  ProductDetail(
-                      product: products.elementAt(1)),
+                  builder: (context) =>
+                      ProductDetail(product: products.elementAt(1)),
                 ),
               );
             },
@@ -42,8 +45,20 @@ class HomeRecommended extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductDetail(
-                      product: products.elementAt(2)),
+                  builder: (context) =>
+                      ProductDetail(product: products.elementAt(2)),
+                ),
+              );
+            },
+          ),
+          ProductCard(
+            product: products.elementAt(3),
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ProductDetail(product: products.elementAt(3)),
                 ),
               );
             },
@@ -55,14 +70,15 @@ class HomeRecommended extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    required this.product,
-    required this.press,
-    this.isWistList = false
-  });
+  const ProductCard(
+      {required this.product,
+      required this.press,
+      this.isWistList = false,
+      this.isCart = false});
   final Product product;
   final VoidCallback press;
   final bool isWistList;
+  final bool isCart;
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +108,6 @@ class ProductCard extends StatelessWidget {
               padding: EdgeInsets.all(defaultPadding / 2),
               decoration: BoxDecoration(
                 color: Colors.white,
-                //border: Border.all(color: Colors.black, width: 1.0),
-                // boxShadow: [
-                //   BoxShadow(
-                //     offset: Offset(0, 10),
-                //     blurRadius: 50,
-                //     color: primaryColor.withOpacity(0.23),
-                //   ),
-                // ],
               ),
               child: Row(
                 children: <Widget>[
@@ -131,41 +139,79 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(defaultPadding / 2),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+              padding: EdgeInsets.all(defaultPadding / 2),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
               ),
-             ),
+              child: isWistList
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                          isCart
+                              ? IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.add_circle,
+                                    color: primaryColor,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.shopping_cart,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.remove_circle,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ])
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: primaryColor,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.favorite,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ])
+              // : Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //   if(isCart)
+              //     IconButton(
+              //         onPressed: () {},
+              //         icon: Icon(
+              //           Icons.shopping_cart,
+              //           color: primaryColor,
+              //         )),
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: primaryColor,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.favorite,
-                    color: primaryColor,
-                  )),
-              isWistList
-              ? IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.delete,
-                    color: primaryColor,
-                  ))
-              : SizedBox(),
+              //       IconButton(
+              //       onPressed: () {},
+              //       icon: Icon(
+              //         Icons.favorite,
+              //         color: primaryColor,
+              //       )),
+              // ])
 
-            ]),
-          ),
+              ),
         ],
       ),
     );

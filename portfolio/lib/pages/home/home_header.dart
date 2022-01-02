@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:portfolio/pages/search.dart';
 
 class HomeHeader extends StatelessWidget {
   final Size size;
@@ -66,18 +67,23 @@ class HomeHeader extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: TextField(
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        hintStyle: TextStyle(
-                          color: primaryColor.withOpacity(0.5),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchPage()));
+                      },
+                      child: TextField(
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          hintText: "Search",
+                          hintStyle: TextStyle(
+                            color: primaryColor.withOpacity(0.5),
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          // surffix isn't working properly  with SVG
+                          // thats why we use row
+                          // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
                         ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        // surffix isn't working properly  with SVG
-                        // thats why we use row
-                        // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
                       ),
                     ),
                   ),
