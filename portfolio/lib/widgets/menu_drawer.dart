@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/pages/log_in_out/login.dart';
 //import 'package:portfolio/pages/contact/contact.dart';
-import 'package:portfolio/services/database.dart';
 import '/pages/account.dart';
 //import '/pages/group.dart';
 import '/pages/user.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:portfolio/global/global_color_const.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:portfolio/pages/wishlist/wishlist.dart';
 
 class MenuDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -14,10 +17,10 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = _currentUser!.displayName.toString();
-    final email = _currentUser!.email.toString();
+    final email = _currentUser!.providerData[0].email.toString();
     final group = 'Sport';
     final urlImage =
-        'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg';
+        _currentUser!.photoURL.toString();
     return Drawer(
       child: Material(
         color: Colors.white,
@@ -36,43 +39,58 @@ class MenuDrawer extends StatelessWidget {
                 ),
               )),
             ),
-            const SizedBox(
-              height: 16,
-            ), //contact menu
+            const SizedBox(height: 10), //contact menu
             buildMenuItem(
               text: 'Contact',
               icon: Icons.contact_phone,
               onClicked: () => selectedItem(context, 0),
             ),
             const SizedBox(
-              height: 16,
+              height: 0,
             ), //Favourites menu
             buildMenuItem(
-              text: 'Group',
-              icon: Icons.group,
+              text: 'History',
+              icon: Icons.history,
               onClicked: () => selectedItem(context, 1),
             ),
             const SizedBox(
-              height: 16,
+              height: 10,
             ), //Account menu
             buildMenuItem(
-              text: 'Account',
-              icon: Icons.account_box,
+              text: 'Wish Lists',
+              icon: Icons.favorite,
               onClicked: () => selectedItem(context, 2),
             ),
             const SizedBox(
               height: 24,
             ),
             Divider(
-              color: Colors.black,
+              color: primaryColor,
             ),
             const SizedBox(
               height: 16,
-            ), //Update app menu
-            buildMenuItem(
-              text: 'Logout',
-              icon: Icons.logout,
-              onClicked: () => selectedItem(context, 3),
+            ),
+            //Update app menu
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: primaryColor,
+              ),
+              title: Text("Log out", style: TextStyle(color: primaryColor)),
+              hoverColor: Colors.red,
+              onTap: () async {
+                final GoogleSignIn googleSignIn = GoogleSignIn();
+                final FacebookAuth result = FacebookAuth.instance;
+                //await FacebookAuth.instance.logOut();
+                await FirebaseAuth.instance.signOut();
+                await googleSignIn.signOut();
+                await result.logOut();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SignIn(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -100,12 +118,12 @@ Widget buildHeader({
             children: [
               Text(
                 name,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 20, color: primaryColor),
               ),
               const SizedBox(height: 4),
               Text(
                 email,
-                style: TextStyle(fontSize: 14, color: Colors.black),
+                style: TextStyle(fontSize: 14, color: primaryColor),
               ),
             ],
           ),
@@ -123,7 +141,7 @@ Widget buildMenuItem({
   required IconData icon,
   VoidCallback? onClicked,
 }) {
-  final color = Colors.black;
+  final color = primaryColor;
   final hoverColor = Colors.red;
   return ListTile(
     leading: Icon(
@@ -154,11 +172,9 @@ void selectedItem(BuildContext context, int index) {
       break;
     case 2:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => AccountPage(),
+        builder: (context) => WishListPage(),
       ));
       break;
-    case 3:
-      context.read<AuthenticationService>().logOut(context);
-      break;
+    
   }
 }

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/log_in_out/verify.dart';
-import 'package:portfolio/pages/map.dart';
+import 'package:portfolio/pages/home/home.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/widgets/primary_button.dart';
 import 'package:portfolio/pages/content/content.dart';
@@ -23,9 +23,10 @@ class _SignUp extends State<SignUp> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding + 50),
+          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: Form(
             key: _registerkey,
             child: Column(
@@ -142,48 +143,7 @@ class _SignUp extends State<SignUp> {
                     )
                   ],
                 ),
-                SizedBox(height: defaultPadding ),
-                Text('or'),
-                SizedBox(height: defaultPadding ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: primaryColor,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.facebook,
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: primaryColor,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset("assets/images/google-icon.png", width: 24, height: 24,)
-                      ),
-                    ),
-                    
-                  ],
-                ),
+                
                 Spacer(flex: 2),
               ],
             ),

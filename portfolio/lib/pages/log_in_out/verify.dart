@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:portfolio/pages/home/home.dart';
 
 class VerifyPage extends StatefulWidget {
   // final String user;
@@ -43,7 +44,7 @@ class _VerifyPageState extends State<VerifyPage> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'We sent email verification to your email: ${_currentUser!.email}',
+                'We sent email verification to your email: ${_currentUser!.providerData[0].email}',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 16.0),
@@ -54,7 +55,7 @@ class _VerifyPageState extends State<VerifyPage> {
                           .textTheme
                           .bodyText1!
                           .copyWith(color: Colors.green),
-                  )
+                    )
                   : Text(
                       'If you are not received the verification email, Please click on Verify email button',
                       style: Theme.of(context)
@@ -84,12 +85,20 @@ class _VerifyPageState extends State<VerifyPage> {
                         IconButton(
                           icon: Icon(Icons.refresh),
                           onPressed: () async {
-                            User? user = await FireAuth.refreshUser(_currentUser!);
-      
+                            User? user =
+                                await FireAuth.refreshUser(_currentUser!);
+
                             if (user != null) {
                               setState(() {
                                 _currentUser = user;
                               });
+                            }
+                            if (user != null && user.emailVerified == true) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
                             }
                           },
                         ),
