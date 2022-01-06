@@ -1,9 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/product_detail/product_detail.dart';
 import 'package:portfolio/model/product_model.dart';
-
+import 'package:portfolio/providers/cart_provider.dart';
+import 'package:portfolio/providers/wishlist_provider.dart';
+import 'package:portfolio/widgets/count_product.dart';
+import 'package:provider/provider.dart';
 
 class HomeRecommended extends StatelessWidget {
   const HomeRecommended({Key? key, required this.products}) : super(key: key);
@@ -83,6 +85,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    ReviewCartProvider reviewCartProvider = Provider.of(context);
+    WishListProvider wishListProvider = Provider.of(context);
     return Container(
       margin: EdgeInsets.only(
         left: defaultPadding,
@@ -138,6 +142,16 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ),
+          isCart
+              ? CountProduct(
+                  productName: product.name,
+                  //productUnit: "Oz",
+                  productId: product.productId,
+                  productImage: product.imageUrl,
+                  productPrice: product.price,
+                  productDescription: product.description,
+                )
+              : SizedBox(),
           Container(
               padding: EdgeInsets.all(defaultPadding / 2),
               decoration: BoxDecoration(
@@ -153,21 +167,67 @@ class ProductCard extends StatelessWidget {
                       children: [
                           isCart
                               ? IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    wishListProvider.addWishlistData(
+                                        wishlistId: product.productId,
+                                        wishListName: product.name,
+                                        wishListPrice: product.price,
+                                        wishListImage: product.imageUrl,
+                                        wishListDescription:
+                                            product.description,
+                                        wishListCategory: product.category);
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          "${product.name} has been added to your wish lists"),
+                                      duration: const Duration(
+                                          seconds: snackbarDuration),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
                                   icon: Icon(
-                                    Icons.add_circle,
+                                    Icons.favorite,
                                     color: primaryColor,
                                   ),
                                 )
                               : IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    reviewCartProvider.addReviewCartData(
+                                      cartId: product.productId,
+                                      cartImage: product.imageUrl,
+                                      cartName: product.name,
+                                      cartPrice: product.price,
+                                      cartDescription: product.description,
+                                      cartQuantity: 1,
+                                    );
+
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          "${product.name} has been added to your cart"),
+                                      duration: const Duration(
+                                          seconds: snackbarDuration),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
                                   icon: Icon(
                                     Icons.shopping_cart,
                                     color: primaryColor,
                                   ),
                                 ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              wishListProvider
+                                  .deleteWishlist(product.productId);
+                              final snackBar = SnackBar(
+                                content: Text(
+                                    "${product.name} has been removed from your wish lists"),
+                                duration:
+                                    const Duration(seconds: snackbarDuration),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
                             icon: Icon(
                               Icons.remove_circle,
                               color: primaryColor,
@@ -178,40 +238,54 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              reviewCartProvider.addReviewCartData(
+                                cartId: product.productId,
+                                cartImage: product.imageUrl,
+                                cartName: product.name,
+                                cartPrice: product.price,
+                                cartDescription: product.description,
+                                cartQuantity: 1,
+                              );
+
+                              final snackBar = SnackBar(
+                                content: Text(
+                                    "${product.name} has been added to your cart"),
+                                duration:
+                                    const Duration(seconds: snackbarDuration),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
                             icon: Icon(
                               Icons.shopping_cart,
                               color: primaryColor,
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              wishListProvider.addWishlistData(
+                                  wishlistId: product.productId,
+                                  wishListName: product.name,
+                                  wishListPrice: product.price,
+                                  wishListImage: product.imageUrl,
+                                  wishListDescription: product.description,
+                                  wishListCategory: product.category);
+                              final snackBar = SnackBar(
+                                content: Text(
+                                    "${product.name} has been added to your wish lists"),
+                                duration:
+                                    const Duration(seconds: snackbarDuration),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
                             icon: Icon(
                               Icons.favorite,
                               color: primaryColor,
                             ),
                           ),
-                        ])
-              // : Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //   if(isCart)
-              //     IconButton(
-              //         onPressed: () {},
-              //         icon: Icon(
-              //           Icons.shopping_cart,
-              //           color: primaryColor,
-              //         )),
-
-              //       IconButton(
-              //       onPressed: () {},
-              //       icon: Icon(
-              //         Icons.favorite,
-              //         color: primaryColor,
-              //       )),
-              // ])
-
-              ),
+                        ])),
         ],
       ),
     );

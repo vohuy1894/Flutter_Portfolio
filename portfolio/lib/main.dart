@@ -4,13 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:portfolio/providers/cart_provider.dart';
 import 'package:portfolio/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/pages/home/home.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:portfolio/providers/product_provider.dart';
 import 'package:portfolio/providers/user_provider.dart';
-
+import 'package:portfolio/providers/wishlist_provider.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -28,9 +29,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(),
         ),
+        ChangeNotifierProvider<ReviewCartProvider>(
+          create: (context) => ReviewCartProvider(),
+        ),
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
+        ChangeNotifierProvider<WishListProvider>(create: (context) => WishListProvider()),
         StreamProvider(
           create: (context) => context.read<AuthenticationService>().authStateChanges,
           initialData: "Portfolio",

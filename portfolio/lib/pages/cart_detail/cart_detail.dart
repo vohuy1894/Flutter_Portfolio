@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/widgets/bottom_app_bar.dart';
 import 'package:portfolio/model/cart_model.dart';
-import 'product_image_icon.dart';
-import 'product_title_price.dart';
+import 'cart_image_icon.dart';
+import 'cart_title_price.dart';
 import 'package:portfolio/model/product_model.dart';
 
-class ProductDetail extends StatelessWidget {
-  const ProductDetail({required this.product});
+class CartProductDetail extends StatelessWidget {
+  const CartProductDetail({required this.product});
 
-  final Product product;
+  final ReviewCartModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,8 @@ class ProductDetail extends StatelessWidget {
                 children: [
                   ListTile(
                       title: Text(
-                          product.description)),
+                          product.cartDescription
+                        )),
                 ],
               ),
             ],

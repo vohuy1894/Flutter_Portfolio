@@ -4,6 +4,11 @@ import 'package:flutter/cupertino.dart';
 
 class ProductProvider extends ChangeNotifier{
   late Product productModel;
+  late FirebaseFirestore firestore;
+
+  initialise(){
+    firestore = FirebaseFirestore.instance;
+  }
   List<Product> search = [];
   productModels(QueryDocumentSnapshot element) {
     
@@ -13,6 +18,7 @@ class ProductProvider extends ChangeNotifier{
       price: element.get("productPrice"),
       category: element.get("productCategory"),
       description: element.get("description"),
+      productId: element.id,
       // productId: element.get("productId"),
       // productUnit: element.get("productUnit"),
     );
@@ -23,15 +29,17 @@ class ProductProvider extends ChangeNotifier{
   //late Product productModel;
   fetchProductList() async {
     List<Product> newList = [];
-    QuerySnapshot value = await FirebaseFirestore.instance.collection("products").get();
+    try {QuerySnapshot value = await FirebaseFirestore.instance.collection("products").get();
+
     value.docs.forEach((element) {
       //productModel = Product(name: element.get("productName"), price: element.get("productImage"), category: element.get("productCategory"), imageUrl: element.get("productImage"), description: element.get("description"));
       productModels(element);
       newList.add(productModel);
     });
-
+    }catch(e){
+      print(e);
+    }
   alcoholProductList = newList;
-  print(alcoholProductList);
   notifyListeners();
   }
   List<Product> get getAlcoholProductDataList {

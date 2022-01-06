@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '/widgets/menu_drawer.dart';
+import 'package:portfolio/providers/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/model/product_model.dart';
 import 'package:portfolio/pages/product_detail/product_detail.dart';
 import 'package:portfolio/pages/home/home_recomended.dart';
 
-class WishListPage extends StatelessWidget {
+class WishListPage extends StatefulWidget{
+  @override
+  _WishListState createState() => _WishListState();
+}
+class _WishListState extends State<WishListPage> {
+  late WishListProvider wishListProvider;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    wishListProvider = Provider.of(context);
+    wishListProvider.getWishlistData();
     return Scaffold(
       //drawer: MenuDrawer(),
       appBar: AppBar(
@@ -30,16 +36,17 @@ class WishListPage extends StatelessWidget {
               right:20.0,
               
             ),
-            itemCount: 4,
+            itemCount: wishListProvider.getWishlist.length,
             itemBuilder: (BuildContext context, int index) {
+              Product data = wishListProvider.getWishlist[index];
               return ProductCard(
-                product: Product.products.elementAt(index),
+                product: data,
                 press: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          ProductDetail(product: Product.products.elementAt(index)),
+                          ProductDetail(product: data),
                     ),
                   );
                 },
