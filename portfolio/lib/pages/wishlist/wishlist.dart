@@ -31,7 +31,7 @@ class _WishListState extends State<WishListPage> {
       ),
       body: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisExtent: 433.0,),
+                crossAxisCount: 2, mainAxisExtent: 470.0,),
             padding: const EdgeInsets.only(
               right:20.0,
               

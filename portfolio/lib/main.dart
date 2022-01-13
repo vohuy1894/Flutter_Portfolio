@@ -12,9 +12,11 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:portfolio/providers/product_provider.dart';
 import 'package:portfolio/providers/user_provider.dart';
 import 'package:portfolio/providers/wishlist_provider.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
   runApp(MyApp());
 }
 

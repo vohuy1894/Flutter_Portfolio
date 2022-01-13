@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/cart_detail/cart_detail.dart';
+import 'package:portfolio/pages/payment/payment_page.dart';
 import 'package:portfolio/providers/cart_provider.dart';
 import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
@@ -26,14 +27,14 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: [
           Row(children: [Text("Subtotal: ${reviewCartProvider.getTotalPrice()}", style: TextStyle(color: primaryColor),)],),
-          ElevatedButton(onPressed: (){}, child: Text("Proceed to check out"), style: ElevatedButton.styleFrom(
+          ElevatedButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentPage()));}, child: Text("Proceed to check out"), style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), primary: primaryColor
           ),),
           Expanded(
             child: SafeArea(
               child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, mainAxisExtent: 480.0,),
+                        crossAxisCount: 2, mainAxisExtent: 503.0,),
                     padding: const EdgeInsets.only(
                       right:20.0,
                       
