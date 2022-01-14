@@ -4,7 +4,6 @@ import 'package:portfolio/pages/log_in_out/login.dart';
 import '/pages/account.dart';
 //import '/pages/group.dart';
 import '/pages/user.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,6 +15,7 @@ class MenuDrawer extends StatelessWidget {
   User? _currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
+
     final name = _currentUser!.displayName.toString();
     final email = _currentUser!.providerData[0].email.toString();
     final group = 'Sport';

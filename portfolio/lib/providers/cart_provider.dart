@@ -8,7 +8,7 @@ class ReviewCartProvider with ChangeNotifier {
     required String cartId,
     required String cartName,
     required String cartImage,
-    required int cartPrice,
+    required String cartPrice,
     required int cartQuantity,
     required String cartDescription,
     //var cartUnit,
@@ -36,7 +36,7 @@ class ReviewCartProvider with ChangeNotifier {
     required String cartId,
     required String cartName,
     required String cartImage,
-    required int cartPrice,
+    required String cartPrice,
     required int cartQuantity,
     required String cartDescription,
   }) async {
@@ -90,9 +90,9 @@ class ReviewCartProvider with ChangeNotifier {
 //// TotalPrice  ///
 
   getTotalPrice() {
-    double total = 0.0;
+    double total = 0.00;
     reviewCartDataList.forEach((element) {
-      total += element.cartPrice * element.cartQuantity;
+      total += double.parse(element.cartPrice) * element.cartQuantity;
     });
     return total;
   }

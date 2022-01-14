@@ -26,8 +26,8 @@ class CartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Row(children: [Text("Subtotal: ${reviewCartProvider.getTotalPrice()}", style: TextStyle(color: primaryColor),)],),
-          ElevatedButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentPage()));}, child: Text("Proceed to check out"), style: ElevatedButton.styleFrom(
+          Row(children: [Text("Subtotal: \$${reviewCartProvider.getTotalPrice().toStringAsFixed(2)}", style: TextStyle(color: primaryColor),)],),
+          ElevatedButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentPage(amountToPay: reviewCartProvider.getTotalPrice(),)));}, child: Text("Proceed to check out"), style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), primary: primaryColor
           ),),
           Expanded(
