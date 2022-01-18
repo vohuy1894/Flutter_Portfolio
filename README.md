@@ -6,10 +6,15 @@
 <img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/login_facebook.png?alt=media&token=8bcd63cd-53ba-4b40-b4ec-f8aaed99801f" width="200" height="400">
 <img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/homepage.png?alt=media&token=2855b833-a952-455e-b4e4-8a957bdebc7a" width="200" height="400">
 
-* The Second Phase is implementing Firebase Storage to store products and images (2 weeks).
+* The Second Phase is implementing Firebase Storage to store products and images and add them to cart and wishlist(2 weeks).
+<img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/wishlist.png?alt=media&token=28d74d93-52ba-41f3-883b-069e2e2c6bdf" width="200" height="400"> <img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/cart.png?alt=media&token=4731cc73-7634-46c0-96f1-68da967e00ac" width="200" height="400">
+
 * The Third Phase is deploying the project to a real server(1-week).
 * Additional Phase for extra features:
 - [x] Stripe Checkout
+<img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/stripepayment.png?alt=media&token=9e9b9cba-313a-450d-a2d4-614cd6c6a94a" width="200" height="400">
+<img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/stripepayment2.png?alt=media&token=0f06984d-3550-478d-afef-3fdb6444a00a" width="200" height="400">
+
 - [x] Search Product
 - [ ] Forgot password
 - [ ] Reset password
