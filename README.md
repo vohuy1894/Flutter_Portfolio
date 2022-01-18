@@ -10,6 +10,7 @@
 * The Third Phase is deploying the project to a real server(1-week).
 * Additional Phase for extra features:
 - [x] Stripe Checkout
+- [ ] 
 <img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/stripepayment.png?alt=media&token=9e9b9cba-313a-450d-a2d4-614cd6c6a94a" width="200" height="400"> <img src="https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/stripepayment2.png?alt=media&token=0f06984d-3550-478d-afef-3fdb6444a00a" width="200" height="400">
 
 - [x] Search Product
