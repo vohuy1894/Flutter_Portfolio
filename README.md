@@ -4,5 +4,11 @@
 * The Second Phase is implementing Firebase Storage to store products and images (2 weeks).
 * The Third Phase is deploying the project to a real server(1-week).
 * Additional Phase for extra features:
-- [x] Stripe Checkout(finished)
-- Search Product(Finished), forgot password, reset password, user data visualization for spending and saving, order histories, account page UI, setting page UI.  
+- [x] Stripe Checkout
+- [x] Search Product
+- [ ] Forgot password
+- [ ] Reset password
+- [ ] User data visualization for spending and saving
+- [ ] Order histories
+- [ ] Account page UI
+- [ ] Setting page UI.  
