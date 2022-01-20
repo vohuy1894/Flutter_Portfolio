@@ -70,6 +70,14 @@ class MenuDrawer extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
+            ListTile(
+              leading: Icon(Icons.settings, color: primaryColor,),
+              title: Text("Settings", style: TextStyle(color: primaryColor)),
+              onTap: (){},
+            ),
+            const SizedBox(
+              height: 16,
+            ),
             //Update app menu
             ListTile(
               leading: Icon(

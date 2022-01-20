@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:portfolio/pages/search.dart';
 import '/widgets/menu_drawer.dart';
 import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
@@ -52,6 +53,18 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         drawer: MenuDrawer(),
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SearchPage(search: docs!,)));
+              },
+            )
+          ],
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
@@ -77,7 +90,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              HomeHeader(size: size),
+              HomeHeader(
+                size: size,
+                
+              ),
               HomeTitleBtn(
                   title: "Recommended",
                   press: () {

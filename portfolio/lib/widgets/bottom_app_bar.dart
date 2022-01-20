@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:portfolio/pages/account.dart';
 import 'package:portfolio/pages/cart/cart.dart';
 class CustomBottomAppBar extends StatelessWidget {
   const CustomBottomAppBar ({ Key? key }) : super(key: key);
@@ -31,7 +32,7 @@ class CustomBottomAppBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccountPage()));
               },
               icon: Icon(
                 Icons.person,

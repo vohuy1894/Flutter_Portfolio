@@ -45,7 +45,7 @@ class ProductProvider extends ChangeNotifier{
   List<Product> get getAlcoholProductDataList {
     return alcoholProductList;
   }
-  List<Product> get gerAllProductSearch {
+  List<Product> get getAllProductSearch {
     return search;
   }
 }

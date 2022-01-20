@@ -10,8 +10,16 @@ import 'list_order_items.dart';
 
 class PaymentPage extends StatefulWidget {
   double amountToPay;
-
-  PaymentPage({Key? key, required this.amountToPay}) : super(key: key);
+  double shippingCharge;
+  double discount;
+  double taxRate;
+  PaymentPage(
+      {Key? key,
+      required this.amountToPay,
+      required this.shippingCharge,
+      required this.discount,
+      required this.taxRate})
+      : super(key: key);
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -25,47 +33,49 @@ enum AddressTypes {
 class _PaymentPageState extends State<PaymentPage> {
   Map<String, dynamic>? paymentIntentData;
   var myType = AddressTypes.Home;
+
   @override
   Widget build(BuildContext context) {
     ReviewCartProvider reviewCartProvider = Provider.of(context);
     reviewCartProvider.getReviewCartData();
-    String discountValue = "20";
+    double tax = widget.amountToPay * widget.taxRate;
+    double total =
+        widget.amountToPay + tax + widget.shippingCharge - widget.discount;
     return Scaffold(
       appBar: AppBar(
         title: Text("Payment"),
         backgroundColor: primaryColor,
       ),
-      bottomNavigationBar: 
-          ListTile(
-            tileColor: primaryColor.withOpacity(0.1),
-            title: Text("Total Amount"),
-            subtitle: Text(
-              "\$${reviewCartProvider.getTotalPrice() +20}",
+      bottomNavigationBar: ListTile(
+        tileColor: primaryColor.withOpacity(0.1),
+        title: Text("Total Amount"),
+        subtitle: Text(
+          "\$${total.toStringAsFixed(2)}",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+        trailing: Container(
+          width: 160,
+          child: MaterialButton(
+            onPressed: () async {
+              await makePayment();
+            },
+            child: const Text(
+              "Place Order",
               style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
+                color: Colors.white,
               ),
             ),
-            trailing: Container(
-              width: 160,
-              child: MaterialButton(
-                onPressed: () async {
-                  await makePayment();
-                },
-                child: const Text(
-                  "Place Order",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                color: primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
+            color: primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
             ),
           ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
@@ -81,7 +91,6 @@ class _PaymentPageState extends State<PaymentPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    
                   ),
                   ListTile(
                     minVerticalPadding: 5,
@@ -96,26 +105,24 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                     ),
                   ),
-                  
                   ListTile(
                     minVerticalPadding: 5,
                     leading: Text(
                       "Delivery Address: ",
                       style: TextStyle(color: Colors.grey[600]),
                     ),
-                    
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "5225 Buffalo Speedway, Houston, TX 77005fadsjfnkadsjnfkadsjnfkajsndkf",
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      "5225 Buffalo Speedway, Houston, TX 77005fadsjfnkadsjnfkadsjnfkajsndkf",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),
                   Divider(),
                   ExpansionTile(
                     title: Text("Order Items"),
@@ -134,7 +141,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                     ),
                     trailing: Text(
-                      "\$${reviewCartProvider.getTotalPrice() + 20}",
+                      "\$${reviewCartProvider.getTotalPrice()}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -147,7 +154,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     trailing: Text(
-                      "\$$discountValue",
+                      "\$${widget.shippingCharge}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -160,7 +167,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     trailing: Text(
-                      "\$10",
+                      "-\$${widget.discount}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -173,7 +180,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     trailing: Text(
-                      "\$10",
+                      "\$${tax.toStringAsFixed(2)}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -186,7 +193,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     trailing: Text(
-                      "\$${reviewCartProvider.getTotalPrice() + 20}",
+                      "\$${total.toStringAsFixed(2)}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -224,7 +231,6 @@ class _PaymentPageState extends State<PaymentPage> {
                       color: primaryColor,
                     ),
                   ),
-                  
                 ],
               );
             }),
@@ -234,21 +240,41 @@ class _PaymentPageState extends State<PaymentPage> {
 
   Future<void> makePayment() async {
     try {
-      double amount = widget.amountToPay + 20;
+      double amount = widget.amountToPay +
+          widget.amountToPay * widget.taxRate +
+          widget.shippingCharge -
+          widget.discount;
+      print(amount);
       paymentIntentData = await createPaymentIntent(
           amount.toStringAsFixed(2).replaceAll(".", ""),
-          'USD'); //json.decode(response.body);
-      // print('Response body==>${response.body.toString()}');
+          'USD'); 
+          final billingDetails = BillingDetails(
+        email: 'email@stripe.com',
+        phone: '+48888000888',
+        address: Address(
+          city: 'Houston',
+          country: 'US',
+          line1: '1459  Circle Drive',
+          line2: '',
+          state: 'Texas',
+          postalCode: '77063',
+        ),
+      ); // mocked data for tests
+
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: paymentIntentData!['client_secret'],
+            // Customer keys
+          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+          customerId: paymentIntentData!['customer'],
             applePay: true,
             googlePay: true,
             testEnv: true,
             style: ThemeMode.system,
             merchantCountryCode: 'US',
-            merchantDisplayName: 'ANNIE',
+            merchantDisplayName: 'Portfolio Test',
+            billingDetails: billingDetails,
           ))
           .then((value) {});
 
@@ -292,10 +318,8 @@ class _PaymentPageState extends State<PaymentPage> {
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
-        'payment_method_types[]': 'card'
+        'payment_method_types[]': 'card',
       };
-      print(body);
-      print(dotenv.env["STRIPE_SECRET_KEY"].toString());
       var response = await http.post(
           Uri.parse('https://api.stripe.com/v1/payment_intents'),
           body: body,
@@ -304,10 +328,14 @@ class _PaymentPageState extends State<PaymentPage> {
                 'Bearer ${dotenv.env["STRIPE_SECRET_KEY"].toString()}',
             'Content-Type': 'application/x-www-form-urlencoded'
           });
+          if(response.statusCode == 200)
+          {
+            //point system add here
+          }
       print('Create Intent reponse ===> ${response.body.toString()}');
       return jsonDecode(response.body);
     } catch (err) {
-      print('err charging user: ${err.toString()}');
+      print('error charging user: ${err.toString()}');
     }
   }
 
