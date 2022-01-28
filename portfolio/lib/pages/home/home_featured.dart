@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeFeatured extends StatelessWidget {
 
@@ -10,11 +11,11 @@ class HomeFeatured extends StatelessWidget {
       child: Row(
         children: <Widget>[
           HomeFeaturedCard(
-            image: "assets/images/drink1.jpg",
+            image: "https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/drink1.jpg?alt=media&token=cb2175f7-4840-42c7-8ee6-d834cea28003",
             press: () {},
           ),
           HomeFeaturedCard(
-            image: "assets/images/drink2.jpg",
+            image: "https://firebasestorage.googleapis.com/v0/b/flutterportfolio-22926.appspot.com/o/drink1.jpg?alt=media&token=cb2175f7-4840-42c7-8ee6-d834cea28003",
             press: () {},
           ),
         ],
@@ -48,7 +49,7 @@ class HomeFeaturedCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(image),
+            image: CachedNetworkImageProvider(image),
           ),
         ),
       ),

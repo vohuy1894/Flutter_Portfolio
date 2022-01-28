@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/pages/cart_detail/cart_detail.dart';
 import 'package:portfolio/pages/payment/payment_page.dart';
 import 'package:portfolio/providers/cart_provider.dart';
-import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/widgets/review_product_card.dart';
@@ -17,7 +16,7 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       //drawer: MenuDrawer(),
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: secondaryColor,
         title: const Text(
           'Cart',
           style: TextStyle(color: Colors.white),
@@ -83,7 +82,6 @@ class CartPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomAppBar(),
     );
   }
 }

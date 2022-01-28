@@ -50,11 +50,15 @@ dependencies:
   progress_dialog: ^1.2.4
   syncfusion_flutter_charts: ^19.4.42
   material_floating_search_bar: ^0.3.6
+  curved_navigation_bar: ^1.0.1
+  animations: ^2.0.2
+  cached_network_image: ^3.2.0
   
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  google_mobile_ads: ^1.0.1
 
 dev_dependencies:
   flutter_test:

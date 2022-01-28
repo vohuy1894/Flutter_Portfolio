@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:portfolio/pages/google_ad/google_ad.dart';
 import 'package:portfolio/pages/home/home.dart';
 import 'package:portfolio/pages/spend_save.dart';
 
@@ -27,7 +28,7 @@ class AccountPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Account'),
           centerTitle: true,
-          backgroundColor: primaryColor,
+          backgroundColor: secondaryColor,
         ),
         body: Container(
           height: 548,
@@ -51,6 +52,10 @@ class AccountPage extends StatelessWidget {
                         builder: (context) => SpendSavePage()));
                   }),
               customListTile(icon: Icons.person, title: "Policy"),
+              ElevatedButton(onPressed: (){ Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => GoogleAdPage()),
+                      ); }, child: Text("Click here for Ad")),
             ],
           ),
         ),

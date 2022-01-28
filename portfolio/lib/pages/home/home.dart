@@ -50,65 +50,68 @@ class _HomePageState extends State<HomePage> {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Scaffold(
-        drawer: MenuDrawer(),
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SearchPage(search: docs!,)));
-              },
-            )
-          ],
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/menu_icon.svg",
-                  color: Colors.white,
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          drawer: MenuDrawer(),
+          appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
                 ),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SearchPage(search: docs!,)));
                 },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-          backgroundColor: primaryColor,
-          title: Text(
-            'Hi Huy',
-            style: TextStyle(color: Colors.white),
-          ),
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              HomeHeader(
-                size: size,
-                
-              ),
-              HomeTitleBtn(
-                  title: "Recommended",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HomeRecommendedMore()));
-                  }),
-              HomeRecommended(
-                products: docs!,
-              ),
-              HomeTitleBtn(title: "Featured", press: () {}),
-              HomeFeatured(),
+              )
             ],
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.asset(
+                    "assets/icons/menu_icon.svg",
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
+            backgroundColor: backgroundColor,
+            title: Text(
+              'Hi Huy',
+              style: TextStyle(color: Colors.black),
+            ),
+            elevation: 0,
           ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // HomeHeader(
+                //   size: size,
+                  
+                // ),
+                HomeTitleBtn(
+                    title: "Recommended",
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HomeRecommendedMore()));
+                    }),
+                HomeRecommended(
+                  products: docs!,
+                ),
+                HomeTitleBtn(title: "Featured", press: () {}),
+                HomeFeatured(),
+              ],
+            ),
+          ),
+          //bottomNavigationBar: CustomBottomAppBar(),
         ),
-        bottomNavigationBar: CustomBottomAppBar(),
       );
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/pages/cart/cart.dart';
 import 'package:portfolio/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 import '/widgets/bottom_app_bar.dart';
@@ -27,6 +28,16 @@ class _WishListState extends State<WishListPage> {
           'Wish List',
           style: TextStyle(color: Colors.white),
         ),
+        actions: <Widget>[
+          IconButton(
+      icon: Icon(
+        Icons.shopping_cart,
+        color: Colors.white,
+      ),
+      onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartPage()));})
+        
+    
+        ],
         elevation: 0,
       ),
       body: GridView.builder(
@@ -53,7 +64,7 @@ class _WishListState extends State<WishListPage> {
                 isWistList: true,
               );
             }),
-      bottomNavigationBar: CustomBottomAppBar(),
+      
     );
   }
 }

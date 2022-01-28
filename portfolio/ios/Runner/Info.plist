@@ -50,8 +50,6 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- TODO Replace this value: -->
-				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>fb236367595242683</string>
 				<string>com.googleusercontent.apps.737492216508-ckcm24n8bjv0nr0sds26d4ld8p88pfde</string>
 			</array>
@@ -63,6 +61,8 @@
 	<string>7a798836cd71a197d651adcad597cbff</string>
 	<key>FacebookDisplayName</key>
 	<string>Flutter Portfolio</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-5634466688965284~7704238811</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 	<string>fbapi</string>
