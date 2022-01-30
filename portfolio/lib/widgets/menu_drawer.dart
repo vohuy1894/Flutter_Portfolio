@@ -24,7 +24,7 @@ class MenuDrawer extends StatelessWidget {
     return Drawer(
       
       child: Material(
-        color: Colors.white,
+        color: backgroundColor.withOpacity(0.5),
         child: ListView(
           children: <Widget>[
             //Contain list of menu items

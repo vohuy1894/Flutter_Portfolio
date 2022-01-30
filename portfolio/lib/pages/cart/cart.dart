@@ -14,12 +14,13 @@ class CartPage extends StatelessWidget {
     reviewCartProvider = Provider.of<ReviewCartProvider>(context);
     reviewCartProvider.getReviewCartData();
     return Scaffold(
+      backgroundColor: backgroundColor,
       //drawer: MenuDrawer(),
       appBar: AppBar(
-        backgroundColor: secondaryColor,
+        backgroundColor: backgroundColor,
         title: const Text(
           'Cart',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
         elevation: 0,
       ),
@@ -29,7 +30,7 @@ class CartPage extends StatelessWidget {
             children: [
               Text(
                 "Subtotal: \$${reviewCartProvider.getTotalPrice().toStringAsFixed(2)}",
-                style: TextStyle(color: primaryColor),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )
             ],
           ),

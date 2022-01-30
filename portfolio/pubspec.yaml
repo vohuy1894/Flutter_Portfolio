@@ -53,6 +53,7 @@ dependencies:
   curved_navigation_bar: ^1.0.1
   animations: ^2.0.2
   cached_network_image: ^3.2.0
+  badges: ^2.0.2
   
 
   # The following adds the Cupertino Icons font to your application.

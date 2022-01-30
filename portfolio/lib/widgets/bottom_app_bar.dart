@@ -23,7 +23,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar>{
         backgroundColor: Colors.black,
         index: 0,
         color: Colors.white,
-        buttonBackgroundColor: Colors.blueAccent,
+        buttonBackgroundColor: primaryColor,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
           items:  <Widget> [

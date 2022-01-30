@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //const primaryColor = Color(0xFFFDAC53); //Marigold
-const primaryColor = Color(0xFFd0e6a5); //Amethyst Orchid
+const primaryColor = Color(0xFFff964f); //Amethyst Orchid
 const backgroundColor = Color(0xfffee5e1);
 //const primaryColor = Color(0xFFB55A30); //Rust
 //const primaryColor = Color(0xFFE9897E); //Burnt coral

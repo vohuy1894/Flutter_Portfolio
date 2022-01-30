@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -63,7 +64,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SearchPage(search: docs!,)));
+                      builder: (context) => SearchPage(
+                            search: docs!,
+                          )));
                 },
               )
             ],
@@ -77,7 +80,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -94,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 // HomeHeader(
                 //   size: size,
-                  
+
                 // ),
                 HomeTitleBtn(
                     title: "Recommended",

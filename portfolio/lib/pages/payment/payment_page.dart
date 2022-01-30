@@ -43,11 +43,12 @@ class _PaymentPageState extends State<PaymentPage> {
         widget.amountToPay + tax + widget.shippingCharge - widget.discount;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment"),
-        backgroundColor: primaryColor,
+        title: Text("Payment", style: TextStyle(color: Colors.black),),
+        backgroundColor: backgroundColor,
+        leading: BackButton(color: Colors.black),
       ),
       bottomNavigationBar: ListTile(
-        tileColor: primaryColor.withOpacity(0.1),
+        tileColor: backgroundColor.withOpacity(0.2),
         title: Text("Total Amount"),
         subtitle: Text(
           "\$${total.toStringAsFixed(2)}",
@@ -66,10 +67,10 @@ class _PaymentPageState extends State<PaymentPage> {
             child: const Text(
               "Place Order",
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
-            color: primaryColor,
+            color: backgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),

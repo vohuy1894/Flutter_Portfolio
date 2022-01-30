@@ -25,22 +25,18 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: backgroundColor,
         appBar: AppBar(
-          title: Text('Account'),
-          centerTitle: true,
-          backgroundColor: secondaryColor,
+          title: Text('Account', style: TextStyle(color: Colors.black),),
+          elevation: 0,
+          //centerTitle: true,
+          backgroundColor: backgroundColor,
         ),
         body: Container(
           height: 548,
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          // decoration: BoxDecoration(
-          //   //color: primaryColor,
-          //   borderRadius: BorderRadius.only(
-          //     topLeft: Radius.circular(30),
-          //     topRight: Radius.circular(30),
-          //   ),
-          // ),
+          
           child: ListView(
             children: [
               customListTile(icon: Icons.person, title: "Profile"),
@@ -55,7 +51,7 @@ class AccountPage extends StatelessWidget {
               ElevatedButton(onPressed: (){ Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => GoogleAdPage()),
-                      ); }, child: Text("Click here for Ad")),
+                      ); }, child: Text("Click here for Ad"), style: ElevatedButton.styleFrom(primary: primaryColor),),
             ],
           ),
         ),
