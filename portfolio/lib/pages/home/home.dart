@@ -1,6 +1,8 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:portfolio/pages/search.dart';
 import '/widgets/menu_drawer.dart';
 import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
@@ -49,50 +51,71 @@ class _HomePageState extends State<HomePage> {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Scaffold(
-        drawer: MenuDrawer(),
-        appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/menu_icon.svg",
-                  color: Colors.white,
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          drawer: MenuDrawer(),
+          appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
                 ),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SearchPage(
+                            search: docs!,
+                          )));
                 },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-          backgroundColor: primaryColor,
-          title: Text(
-            'Hi Huy',
-            style: TextStyle(color: Colors.white),
-          ),
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              HomeHeader(size: size),
-              HomeTitleBtn(
-                  title: "Recommended",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HomeRecommendedMore()));
-                  }),
-              HomeRecommended(
-                products: docs!,
-              ),
-              HomeTitleBtn(title: "Featured", press: () {}),
-              HomeFeatured(),
+              )
             ],
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.asset(
+                    "assets/icons/menu_icon.svg",
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
+            backgroundColor: backgroundColor,
+            title: Text(
+              'Hi Huy',
+              style: TextStyle(color: Colors.black),
+            ),
+            elevation: 0,
           ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // HomeHeader(
+                //   size: size,
+
+                // ),
+                HomeTitleBtn(
+                    title: "Recommended",
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HomeRecommendedMore()));
+                    }),
+                HomeRecommended(
+                  products: docs!,
+                ),
+                HomeTitleBtn(title: "Featured", press: () {}),
+                HomeFeatured(),
+              ],
+            ),
+          ),
+          //bottomNavigationBar: CustomBottomAppBar(),
         ),
-        bottomNavigationBar: CustomBottomAppBar(),
       );
     }
   }

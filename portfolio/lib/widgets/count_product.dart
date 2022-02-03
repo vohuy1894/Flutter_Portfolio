@@ -11,7 +11,7 @@ class CountProduct extends StatefulWidget {
   String productName;
   String productImage;
   String productId;
-  int productPrice;
+  String productPrice;
   String productDescription;
   //var productUnit;
   CountProduct({

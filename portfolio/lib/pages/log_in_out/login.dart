@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/home/home.dart';
+import 'package:portfolio/pages/home/new_home.dart';
 import 'package:portfolio/services/fire_auth.dart';
 import 'package:portfolio/widgets/primary_button.dart';
 import 'package:portfolio/pages/log_in_out/register.dart';
@@ -32,7 +33,7 @@ class _SignIn extends State<SignIn> {
     {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => NewHomePage(),
         ),
       );
     }

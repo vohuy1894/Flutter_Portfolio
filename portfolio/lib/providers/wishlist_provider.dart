@@ -7,7 +7,7 @@ class WishListProvider extends ChangeNotifier {
   addWishlistData({
     required String wishlistId,
     required String wishListName,
-    required int wishListPrice,
+    required String wishListPrice,
     required String wishListImage,
     required String wishListDescription,
     required String wishListCategory,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
+import 'package:portfolio/providers/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 //import 'package:portfolio/pages/contact/contact.dart';
 import '/pages/account.dart';
 //import '/pages/group.dart';
 import '/pages/user.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:portfolio/global/global_color_const.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,8 +23,9 @@ class MenuDrawer extends StatelessWidget {
     final urlImage =
         _currentUser!.photoURL.toString();
     return Drawer(
+      
       child: Material(
-        color: Colors.white,
+        color: backgroundColor.withOpacity(0.5),
         child: ListView(
           children: <Widget>[
             //Contain list of menu items
@@ -65,7 +67,15 @@ class MenuDrawer extends StatelessWidget {
               height: 24,
             ),
             Divider(
-              color: primaryColor,
+              color: textColor,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            ListTile(
+              leading: Icon(Icons.settings, color: textColor,),
+              title: Text("Settings", style: TextStyle(color: textColor)),
+              onTap: (){},
             ),
             const SizedBox(
               height: 16,
@@ -74,9 +84,9 @@ class MenuDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(
                 Icons.logout,
-                color: primaryColor,
+                color: textColor,
               ),
-              title: Text("Log out", style: TextStyle(color: primaryColor)),
+              title: Text("Log out", style: TextStyle(color: textColor)),
               hoverColor: Colors.red,
               onTap: () async {
                 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -118,12 +128,12 @@ Widget buildHeader({
             children: [
               Text(
                 name,
-                style: TextStyle(fontSize: 20, color: primaryColor),
+                style: TextStyle(fontSize: 20, color: textColor),
               ),
               const SizedBox(height: 4),
               Text(
                 email,
-                style: TextStyle(fontSize: 14, color: primaryColor),
+                style: TextStyle(fontSize: 14, color: textColor),
               ),
             ],
           ),
@@ -141,7 +151,7 @@ Widget buildMenuItem({
   required IconData icon,
   VoidCallback? onClicked,
 }) {
-  final color = primaryColor;
+  final color = textColor;
   final hoverColor = Colors.red;
   return ListTile(
     leading: Icon(

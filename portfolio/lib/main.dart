@@ -1,7 +1,9 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/global/global_color_const.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:portfolio/providers/cart_provider.dart';
@@ -12,9 +14,18 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:portfolio/providers/product_provider.dart';
 import 'package:portfolio/providers/user_provider.dart';
 import 'package:portfolio/providers/wishlist_provider.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: "assets/.env");
+  Stripe.publishableKey = dotenv.env["STRIPE_SHAREABLE_KEY"].toString();
+  Stripe.merchantIdentifier = 'any string works';
+
+  await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
@@ -51,6 +62,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => AnimatedSplashScreen(splash: Image.asset('assets/images/logo.png',), nextScreen: SignIn(), duration: 3000, splashIconSize: double.infinity,splashTransition: SplashTransition.fadeTransition,),
           '/home': (context) => HomePage()
         },
+        
     ),);
   }
 }

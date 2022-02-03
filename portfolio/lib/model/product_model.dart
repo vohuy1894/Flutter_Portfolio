@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Product extends Equatable{
   final String name;
-  final int price;
+  final String price;
   final String imageUrl;
   final String description;
   final String category;
@@ -23,7 +23,7 @@ class Product extends Equatable{
   static List<Product> products = [
     Product(
       name: "Cocktail",
-      price: 200,
+      price: "200",
       imageUrl: "assets/images/drink1.jpg",
        category: "Alcohol",
        productId: "id1",
@@ -33,7 +33,7 @@ class Product extends Equatable{
 
      Product(
       name: "Mayday",
-      price: 100,
+      price: "100",
       imageUrl: "assets/images/drink2.jpg",
       category: "Alcohol",
       productId: "id2",
@@ -43,7 +43,7 @@ class Product extends Equatable{
 
     Product(
       name: "Sunshine",
-      price: 150,
+      price: "150",
       category: "Alcohol",
       imageUrl: "assets/images/drink3.jpg",
       productId: "id3",
@@ -53,7 +53,7 @@ class Product extends Equatable{
 
     Product(
       name: "Bramble",
-      price: 149,
+      price: "149",
       category: "Alcohol",
       imageUrl: "assets/images/drink4.jpg",
       productId: "id4",

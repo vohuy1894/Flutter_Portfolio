@@ -4,6 +4,7 @@ import 'package:portfolio/model/cart_model.dart';
 import 'package:portfolio/providers/cart_provider.dart';
 import 'package:portfolio/widgets/count_product.dart';
 import 'package:provider/provider.dart';
+import 'package:portfolio/providers/wishlist_provider.dart';
 
 class ReviewProductCard extends StatelessWidget {
   const ReviewProductCard(
@@ -17,6 +18,7 @@ class ReviewProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ReviewCartProvider reviewCartProvider = Provider.of(context);
+    WishListProvider wishListCartProvider = Provider.of(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(
@@ -96,7 +98,11 @@ class ReviewProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        wishListCartProvider.addWishlistData(wishlistId: product.cartId, wishListName: product.cartName, wishListPrice: product.cartPrice, wishListImage: product.cartImage, wishListDescription: product.cartName, wishListCategory: product.cartName);
+                        final snackBar = SnackBar(content:  Text("${product.cartName} has been added to your wish list"), duration: const Duration(seconds: snackbarDuration),);
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
                       icon: const Icon(
                         Icons.favorite,
                         color: primaryColor,
