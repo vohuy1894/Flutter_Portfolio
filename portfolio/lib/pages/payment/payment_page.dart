@@ -332,6 +332,8 @@ class _PaymentPageState extends State<PaymentPage> {
           if(response.statusCode == 200)
           {
             //point system add here
+            //return cart to zero product
+            //add to history
           }
       print('Create Intent reponse ===> ${response.body.toString()}');
       return jsonDecode(response.body);

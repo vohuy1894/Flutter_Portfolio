@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/pages/log_in_out/login.dart';
+import 'package:portfolio/providers/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 //import 'package:portfolio/pages/contact/contact.dart';
 import '/pages/account.dart';
 //import '/pages/group.dart';
@@ -15,7 +17,6 @@ class MenuDrawer extends StatelessWidget {
   User? _currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-
     final name = _currentUser!.displayName.toString();
     final email = _currentUser!.providerData[0].email.toString();
     final group = 'Sport';
