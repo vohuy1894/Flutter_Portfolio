@@ -1,10 +1,7 @@
-import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/pages/search.dart';
 import '/widgets/menu_drawer.dart';
-import '/widgets/bottom_app_bar.dart';
 import 'package:portfolio/global/global_color_const.dart';
 
 import 'home_header.dart';
@@ -26,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Database db;
   List<Product>? docs;
-  initialise() {
+  void initialise() {
     db = Database();
     db.initiliase();
     db.read().then((value) => {

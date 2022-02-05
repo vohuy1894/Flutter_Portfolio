@@ -13,6 +13,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:portfolio/pages/wishlist/wishlist.dart';
 
 class MenuDrawer extends StatelessWidget {
+
   final padding = EdgeInsets.symmetric(horizontal: 20);
   User? _currentUser = FirebaseAuth.instance.currentUser;
   @override
