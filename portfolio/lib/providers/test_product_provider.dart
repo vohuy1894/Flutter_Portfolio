@@ -9,11 +9,21 @@ class Database {
     firestore = FirebaseFirestore.instance;
   }
 
-  Future<void> create(String name, String code) async {
+  Future<void> create({
+    required String productName,
+    required String productImage,
+    required String productPrice,
+    required String productCategory,
+    required String productDescription,
+    //var cartUnit,
+  }) async {
     try {
-      await firestore.collection("countries").add({
-        'name': name,
-        'code': code,
+      await firestore.collection("products").add({
+        "productName": productName,
+        "productImage": productImage,
+        "productPrice": productPrice,
+        "productCategory": productCategory,
+        "productDescription": productDescription,
         'timestamp': FieldValue.serverTimestamp()
       });
     } catch (e) {
@@ -23,7 +33,7 @@ class Database {
 
   Future<void> delete(String id) async {
     try {
-      await firestore.collection("countries").doc(id).delete();
+      await firestore.collection("products").doc(id).delete();
     } catch (e) {
       print(e);
     }
@@ -50,17 +60,27 @@ class Database {
       }
     } on FirebaseException catch (e) {
       print(e);
-      
     }
     //return docs;
   }
 
-  Future<void> update(String id, String name, String code) async {
+  Future<void> update({
+    required String productId,
+    String? productName,
+    String? productImage,
+    String? productPrice,
+    String? productCategory,
+    String? productDescription,
+  }) async {
     try {
-      await firestore
-          .collection("countries")
-          .doc(id)
-          .update({'name': name, 'code': code});
+      await firestore.collection("products").doc(productId).update({
+        "productName": productName,
+        "productImage": productImage,
+        "productPrice": productPrice,
+        "productCategory": productCategory,
+        "productDescription": productDescription,
+        'timestamp': FieldValue.serverTimestamp()
+      });
     } catch (e) {
       print(e);
     }

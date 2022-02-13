@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/global/global_color_const.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class HomeTitleBtn extends StatelessWidget {
   const HomeTitleBtn({
@@ -17,19 +18,32 @@ class HomeTitleBtn extends StatelessWidget {
         children: <Widget>[
           TitleWithCustomUnderline(text: title),
           Spacer(),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              primary: primaryColor,
-            ),
+          NeumorphicButton(
             onPressed: press,
+            style: NeumorphicStyle(
+                  shape: NeumorphicShape.concave,
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
+                  color: primaryColor
+                ),
             child: Text(
               "More",
               style: TextStyle(color: Colors.white),
             ),
           ),
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(20),
+          //     ),
+          //     primary: primaryColor,
+          //   ),
+          //   onPressed: press,
+          //   child: Text(
+          //     "More",
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          // ),
         ],
       ),
     );

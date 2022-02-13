@@ -1,0 +1,178 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
+import 'example_scaffold.dart';
+import 'loading_button.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+
+class PaymentSheetScreenWithCustomFlow extends StatefulWidget {
+  @override
+  _PaymentSheetScreenState createState() => _PaymentSheetScreenState();
+}
+
+class _PaymentSheetScreenState extends State<PaymentSheetScreenWithCustomFlow> {
+  int step = 0;
+  final kApiUrl = defaultTargetPlatform == TargetPlatform.android
+    ? 'http://10.0.2.2:4242'
+    : 'http://localhost:4242';
+  @override
+  Widget build(BuildContext context) {
+    return ExampleScaffold1(
+      title: 'Payment Sheet',
+      tags: ['Custom Flow'],
+      children: [
+        Stepper(
+          controlsBuilder: emptyControlBuilder,
+          currentStep: step,
+          steps: [
+            Step(
+              title: Text('Init payment'),
+              content: LoadingButton(
+                onPressed: initPaymentSheet,
+                text: 'Init payment sheet',
+              ),
+            ),
+            Step(
+              title: Text('Select payment method'),
+              content: LoadingButton(
+                onPressed: presentPaymentSheet,
+                text: 'Select payment method',
+              ),
+            ),
+            Step(
+              title: Text('Confirm payment'),
+              content: LoadingButton(
+                onPressed: confirmPayment,
+                text: 'Pay now',
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> initPaymentSheet() async {
+    try {
+      // 1. create payment intent on the server
+      final data = await createTestPaymentSheet();
+
+      // 2. initialize the payment sheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          // Enable custom flow
+          customFlow: true,
+          // Main params
+          merchantDisplayName: 'Flutter Stripe Store Demo',
+          paymentIntentClientSecret: data['paymentIntent'],
+          // Customer keys
+          customerEphemeralKeySecret: data['ephemeralKey'],
+          customerId: data['customer'],
+          // Extra options
+          testEnv: true,
+          applePay: true,
+          googlePay: true,
+          style: ThemeMode.dark,
+          merchantCountryCode: 'DE',
+        ),
+      );
+      setState(() {
+        step = 1;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+      rethrow;
+    }
+  }
+
+  Future<void> presentPaymentSheet() async {
+    try {
+      // 3. display the payment sheet.
+      await Stripe.instance.presentPaymentSheet();
+
+      setState(() {
+        step = 2;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Payment option selected'),
+        ),
+      );
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error from Stripe: ${e.error.localizedMessage}'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unforeseen error: ${e}'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> confirmPayment() async {
+    try {
+      // 4. Confirm the payment sheet.
+      await Stripe.instance.confirmPaymentSheetPayment();
+
+      setState(() {
+        step = 0;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Payment succesfully completed'),
+        ),
+      );
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error from Stripe: ${e.error.localizedMessage}'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unforeseen error: ${e}'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>> createTestPaymentSheet() async {
+    final url = Uri.parse('https://api.stripe.com/v1/payment_intents');
+    final response = await http.post(
+      url,
+      headers: {
+            'Authorization':
+                'Bearer ${dotenv.env["STRIPE_SECRET_KEY"].toString()}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+      body: json.encode({
+        'a': 'a',
+      }),
+    );
+    final body = json.decode(response.body);
+
+    if (body['error'] != null) {
+      throw Exception('Error code: ${body['error']}');
+    }
+
+    return body;
+  }
+}
+
+final ControlsWidgetBuilder emptyControlBuilder = (_, __) => Container();
