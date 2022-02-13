@@ -8,12 +8,12 @@ import 'package:portfolio/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'list_order_items.dart';
 
-class PaymentPage extends StatefulWidget {
+class SavePaymentPage extends StatefulWidget {
   double amountToPay;
   double shippingCharge;
   double discount;
   double taxRate;
-  PaymentPage(
+  SavePaymentPage(
       {Key? key,
       required this.amountToPay,
       required this.shippingCharge,
@@ -22,7 +22,7 @@ class PaymentPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PaymentPageState createState() => _PaymentPageState();
+  _SavePaymentPageState createState() => _SavePaymentPageState();
 }
 
 enum AddressTypes {
@@ -30,10 +30,11 @@ enum AddressTypes {
   OnlinePayment,
 }
 
-class _PaymentPageState extends State<PaymentPage> {
+class _SavePaymentPageState extends State<SavePaymentPage> {
   Map<String, dynamic>? paymentIntentData;
   var myType = AddressTypes.Home;
   CardFieldInputDetails? _card;
+  Map<String, dynamic>? _customer;
   @override
   Widget build(BuildContext context) {
     ReviewCartProvider reviewCartProvider = Provider.of(context);
@@ -43,7 +44,10 @@ class _PaymentPageState extends State<PaymentPage> {
         widget.amountToPay + tax + widget.shippingCharge - widget.discount;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment", style: TextStyle(color: Colors.black),),
+        title: Text(
+          "Payment",
+          style: TextStyle(color: Colors.black),
+        ),
         backgroundColor: backgroundColor,
         leading: BackButton(color: Colors.black),
       ),
@@ -247,9 +251,8 @@ class _PaymentPageState extends State<PaymentPage> {
           widget.discount;
       print(amount);
       paymentIntentData = await createPaymentIntent(
-          amount.toStringAsFixed(2).replaceAll(".", ""),
-          'USD'); 
-          final billingDetails = BillingDetails(
+          amount.toStringAsFixed(2).replaceAll(".", ""), 'USD');
+      final billingDetails = BillingDetails(
         email: 'email@stripe.com',
         phone: '+48888000888',
         address: Address(
@@ -261,14 +264,14 @@ class _PaymentPageState extends State<PaymentPage> {
           postalCode: '77063',
         ),
       ); // mocked data for tests
-
+      print('paymentIntentData! line 267: ' + paymentIntentData!['client_secret']);
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: paymentIntentData!['client_secret'],
             // Customer keys
-          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
-          customerId: paymentIntentData!['customer'],
+            customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+            customerId: paymentIntentData!['customer'],
             applePay: true,
             googlePay: true,
             testEnv: true,
@@ -313,15 +316,53 @@ class _PaymentPageState extends State<PaymentPage> {
     }
   }
 
+  //Create customer
+  createcustomer() async {
+    try {
+      var data = {
+        'name': 'Jenny Rosen',
+        'email': 'jenny@gmail.com'
+      // 'address': {
+      //   'line1': '510 Townsend St',
+      //   'postal_code': '98140',
+      //   'city': 'San Francisco',
+      //   'state': 'CA',
+      //   'country': 'US',
+      // }
+      };
+     
+      var response =
+          await http.post(Uri.parse('https://api.stripe.com/v1/customers'),
+              body: data,
+              headers: {
+            'Authorization':
+                'Bearer ${dotenv.env["STRIPE_SECRET_KEY"].toString()}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      print('response: ${jsonDecode(response.body)}');
+      return jsonDecode(response.body);
+    } catch (err) {
+      print('err charging user: ${err.toString()}');
+    }
+    return null;
+  }
+
   //  Future<Map<String, dynamic>>
   createPaymentIntent(String amount, String currency) async {
     try {
-      Map<String, dynamic> body = {
+      _customer = await createcustomer();
+      print('Customer createPaymentIntent: $_customer');
+      Map<String, dynamic> body = ({
+        'customer': _customer!['id'],
         'amount': calculateAmount(amount),
         'currency': currency,
         'payment_method_types[]': 'card',
-      };
-      var response = await http.post(
+        'setup_future_usage': 'off_session',
+        // 'automatic_payment_methods': {
+        //   'enabled': 'true',
+        // },
+      });
+      final http.Response response = await http.post(
           Uri.parse('https://api.stripe.com/v1/payment_intents'),
           body: body,
           headers: {
@@ -329,12 +370,11 @@ class _PaymentPageState extends State<PaymentPage> {
                 'Bearer ${dotenv.env["STRIPE_SECRET_KEY"].toString()}',
             'Content-Type': 'application/x-www-form-urlencoded'
           });
-          if(response.statusCode == 200)
-          {
-            //point system add here
-            //return cart to zero product
-            //add to history
-          }
+      if (response.statusCode == 200) {
+        //point system add here
+        //return cart to zero product
+        //add to history
+      }
       print('Create Intent reponse ===> ${response.body.toString()}');
       return jsonDecode(response.body);
     } catch (err) {
